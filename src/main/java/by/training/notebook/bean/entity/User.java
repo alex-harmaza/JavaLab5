@@ -5,27 +5,42 @@ package by.training.notebook.bean.entity;
  */
 public class User {
 
+    private Long id;
     private String login;
     private String password;
 
+
+    public User(){}
+
+    public User(Long id){
+        setId(id);
+    }
 
     public User(String login, String password){
         setLogin(login);
         setPassword(password);
     }
 
+    public User(Long id, String login, String password){
+        setId(id);
+        setLogin(login);
+        setPassword(password);
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getLogin() {
         return login;
     }
 
     public void setLogin(String login) {
-        if (login == null){
-            throw new NullPointerException("Login is null");
-        }
-        if (login.trim().isEmpty()){
-            throw new IllegalArgumentException("Login is empty");
-        }
         this.login = login.trim();
     }
 
@@ -34,9 +49,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        if (password == null || password.isEmpty() || password.length() < 4){
-            throw new IllegalArgumentException("Incorrect password");
-        }
         this.password = password;
     }
 }

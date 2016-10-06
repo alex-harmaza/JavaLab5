@@ -7,14 +7,13 @@ import by.training.notebook.dao.pool.ConnectionPool;
 import java.util.Date;
 
 /**
- * Created by alexh on 05.10.2016.
+ * Created by Aliaksandr_Harmaza on 10/6/2016.
  */
 public interface INoteDAO {
 
-    void addNote(Note note, ConnectionPool.Connection connection) throws DAOException;
-    void deleteNoteByID(long noteID, ConnectionPool.Connection connection) throws DAOException;
-    Note[] getNoteList(ConnectionPool.Connection connection) throws DAOException;
-    Note[] getNoteList(Date createdDate, ConnectionPool.Connection connection) throws DAOException;
-    Note[] getNoteList(String content, ConnectionPool.Connection connection) throws DAOException;
-
+    void createNote(Note note, ConnectionPool.Connection connection) throws DAOException;
+    void deleteNoteByIDAndUserID(long noteID, long userID, ConnectionPool.Connection connection) throws DAOException;
+    void deleteAllNotes(long userID, ConnectionPool.Connection connection) throws DAOException;
+    Note[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection connection) throws DAOException;
+    Note[] searchByContent(String content, long userID, ConnectionPool.Connection connection) throws DAOException;
 }

@@ -9,8 +9,8 @@ import by.training.notebook.dao.pool.ConnectionPool;
  */
 public interface IUserDAO {
 
-    boolean login(User user, ConnectionPool.Connection connection) throws DAOException;
-    void register(User user, ConnectionPool.Connection connection) throws DAOException;
-    void delete(User user, ConnectionPool.Connection connection) throws DAOException;
+    User getUser(String login, ConnectionPool.Connection connection) throws DAOException;
+    void addUser(User user, ConnectionPool.Connection connection) throws DAOException;
+    void deleteUser(User user, ConnectionPool.Connection connection) throws DAOException;
 
 }

@@ -10,16 +10,22 @@ public class Note {
     private Long id;
     private Date creationDate;
     private String message;
+    private Long userID;
 
 
-    public Note(Date creationDate, String message){
-        setCreationDate(creationDate);
+    public Note(){}
+
+    public Note(Date createdDate, String message, Long userID){
+        setCreationDate(createdDate);
         setMessage(message);
+        setUserID(userID);
     }
 
-    public Note(Long id, Date creationDate, String message){
-        this(creationDate, message);
+    public Note(Long id, Date creationDate, String message, Long userID){
         setId(id);
+        setCreationDate(creationDate);
+        setMessage(message);
+        setUserID(userID);
     }
 
 
@@ -36,9 +42,6 @@ public class Note {
     }
 
     public void setCreationDate(Date creationDate) {
-        if (creationDate == null){
-            throw new NullPointerException("Date of creation is null");
-        }
         this.creationDate = creationDate;
     }
 
@@ -47,12 +50,14 @@ public class Note {
     }
 
     public void setMessage(String message) {
-        if (message == null){
-            throw new NullPointerException("Message is null");
-        }
-        if (message.trim().isEmpty()){
-            throw new IllegalArgumentException("Message is empty");
-        }
         this.message = message.trim();
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 }

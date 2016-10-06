@@ -2,8 +2,8 @@ package by.training.notebook.dao.factory;
 
 import by.training.notebook.dao.INoteDAO;
 import by.training.notebook.dao.IUserDAO;
-import by.training.notebook.dao.mysql.NoteDAO;
-import by.training.notebook.dao.mysql.UserDAO;
+import by.training.notebook.dao.impl.NoteDAO;
+import by.training.notebook.dao.impl.UserDAO;
 
 /**
  * Created by alexh on 05.10.2016.
