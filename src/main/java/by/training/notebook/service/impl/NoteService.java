@@ -29,7 +29,7 @@ public class NoteService implements INoteService {
         try {
             ConnectionPool.Connection connection = ConnectionPool.getInstance().takeConnection();
             Note temp = new Note(new Date(), note, UserContext.getInstance().getId());
-            DAOFactory.getInstance().getNoteDAO().createNote(temp, connection);
+            DAOFactory.getInstance().getNoteDAO().saveNote(temp, connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
         catch (InterruptedException | DAOException | SQLException ex) {

@@ -30,8 +30,9 @@ public class CommandFactory {
 
         map.put(CommandEnum.ADD_NOTE, new AddNote());
         map.put(CommandEnum.DELETE_NOTE, new DeleteNote());
+        map.put(CommandEnum.DELETE_ALL_NOTES, new DeleteAllNotes());
         map.put(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE, new SearchNotesByCreatedDate());
-        map.put(CommandEnum.SEARCH_NOTES_BY_CONTENT, new SearchNoteByContent());
+        map.put(CommandEnum.SEARCH_NOTES_BY_CONTENT, new SearchNotesByContent());
     }
 
 

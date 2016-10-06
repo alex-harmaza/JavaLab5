@@ -40,7 +40,6 @@ public class UserService implements IUserService {
             UserContext userContext = UserContext.getInstance();
             userContext.setType(UserTypeEnum.AUTHORIZED);
             userContext.setId(user.getId());
-            userContext.setLogin(user.getLogin());
             result = true;
         }
 
@@ -61,7 +60,7 @@ public class UserService implements IUserService {
 
         try {
             ConnectionPool.Connection connection = ConnectionPool.getInstance().takeConnection();
-            DAOFactory.getInstance().getUserDAO().addUser(new User(login, password), connection);
+            DAOFactory.getInstance().getUserDAO().saveUser(new User(login, password), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
         catch (InterruptedException | SQLException | DAOException ex){
@@ -78,7 +77,7 @@ public class UserService implements IUserService {
         try {
             ConnectionPool.Connection connection = ConnectionPool.getInstance().takeConnection();
             DAOFactory.getInstance().getUserDAO()
-                    .deleteUser(new User(UserContext.getInstance().getId()), connection);
+                    .deleteUser(UserContext.getInstance().getId(), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
         catch (InterruptedException | SQLException | DAOException ex){

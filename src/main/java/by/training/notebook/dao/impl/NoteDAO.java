@@ -26,7 +26,7 @@ public class NoteDAO implements INoteDAO {
 
 
     @Override
-    public void createNote(Note note, ConnectionPool.Connection connection) throws DAOException {
+    public void saveNote(Note note, ConnectionPool.Connection connection) throws DAOException {
         try (PreparedStatement s = connection
                 .prepareStatement((note.getId() == null) ? ADD_NOTE_QUERY : UPDATE_NOTE_QUERY)) {
             s.setLong(1, note.getCreationDate().getTime());

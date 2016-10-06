@@ -7,14 +7,14 @@ public class UserContext {
 
     private static final UserContext instance = new UserContext();
 
-    private Long id;
-    private String login;
-    private UserTypeEnum type;
-
 
     public static UserContext getInstance(){
         return instance;
     }
+
+
+    private Long id;
+    private UserTypeEnum type;
 
 
     private UserContext(){
@@ -34,14 +34,6 @@ public class UserContext {
         return type;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public void setType(UserTypeEnum type) {
         if (type == null) {
             throw new NullPointerException("Type is null");
@@ -51,7 +43,6 @@ public class UserContext {
 
     public void invalidate(){
         setType(UserTypeEnum.ANONYMOUS);
-        setLogin(null);
         setId(null);
     }
 }

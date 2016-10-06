@@ -14,9 +14,10 @@ import java.sql.SQLException;
  */
 public class UserDAO implements IUserDAO{
 
-    private final static String GET_USER_QUERY = "SELECT * FROM User where login = ?";
+    private final static String GET_USER_QUERY = "SELECT * FROM User WHERE login = ?";
     private final static String ADD_USER_QUERY = "INSERT INTO User (login, password) VALUES (?, ?)";
-    private final static String UPDATE_USER_QUERY = "UPDATE FROM User set login = ? password = ? where id = ?";
+    private final static String UPDATE_USER_QUERY = "UPDATE User SET login = ?, password = ? WHERE id = ?";
+    private final static String DELETE_USER_QUERY = "DELETE FROM User WHERE id = ?";
 
 
     @Override
@@ -47,7 +48,7 @@ public class UserDAO implements IUserDAO{
     }
 
     @Override
-    public void addUser(User user, ConnectionPool.Connection connection) throws DAOException {
+    public void saveUser(User user, ConnectionPool.Connection connection) throws DAOException {
         if (user == null){
             throw new DAOException("User is null");
         }
@@ -71,38 +72,13 @@ public class UserDAO implements IUserDAO{
     }
 
     @Override
-    public void deleteUser(User user, ConnectionPool.Connection connection) throws DAOException {
-        if (user == null){
-            throw new DAOException("User is null");
-        }
+    public void deleteUser(long userID, ConnectionPool.Connection connection) throws DAOException {
         if (connection == null){
             throw new DAOException("Connection is null");
         }
 
-        StringBuilder builder = new StringBuilder();
-
-        if (user.getId() != null){
-            builder.append("id = ?");
-        }
-        if (user.getLogin() != null){
-            builder.append((builder.length() == 0) ? "login = ?" : "AND login = ?");
-        }
-        if (user.getPassword() != null){
-            builder.append((builder.length() == 0) ? "password = ?" : "AND password = ?");
-        }
-
-        builder.insert(0, "DELETE_USER FROM User ");
-
-        try (PreparedStatement s = connection.prepareStatement(builder.toString())) {
-            if (user.getId() != null){
-                s.setLong(1, user.getId());
-            }
-            if (user.getLogin() != null){
-                s.setString(2, user.getLogin());
-            }
-            if (user.getPassword() != null){
-                s.setString(3, user.getPassword());
-            }
+        try (PreparedStatement s = connection.prepareStatement(DELETE_USER_QUERY)) {
+            s.setLong(1, userID);
             s.executeUpdate();
 
         } catch (SQLException ex) {

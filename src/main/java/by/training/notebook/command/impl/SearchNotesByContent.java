@@ -14,7 +14,7 @@ import by.training.notebook.service.factory.ServiceFactory;
 /**
  * Created by Aliaksandr_Harmaza on 10/6/2016.
  */
-public class SearchNoteByContent implements ICommand {
+public class SearchNotesByContent implements ICommand {
 
     @Override
     public Response execute(Request request) throws CommandException {
