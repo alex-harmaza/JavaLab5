@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * Created by Aliaksandr_Harmaza on 10/6/2016.
  */
-public class DateRequest extends Request {
+public class RequestWithDate extends Request {
 
     private Date date;
 
 
-    public DateRequest(CommandEnum command, Date date){
+    public RequestWithDate(CommandEnum command, Date date){
         super(command);
         setDate(date);
     }

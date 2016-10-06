@@ -32,8 +32,8 @@ public class NoteService implements INoteService {
             DAOFactory.getInstance().getNoteDAO().createNote(temp, connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | DAOException | SQLException e) {
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | DAOException | SQLException ex) {
+            throw new ServiceException(ex);
         }
     }
 
@@ -49,8 +49,8 @@ public class NoteService implements INoteService {
                     .deleteNoteByIDAndUserID(id, UserContext.getInstance().getId(), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | DAOException | SQLException e) {
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | DAOException | SQLException ex) {
+            throw new ServiceException(ex);
         }
     }
 
@@ -65,8 +65,8 @@ public class NoteService implements INoteService {
                     .deleteAllNotes(UserContext.getInstance().getId(), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | DAOException | SQLException e) {
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | DAOException | SQLException ex) {
+            throw new ServiceException(ex);
         }
     }
 
@@ -87,8 +87,8 @@ public class NoteService implements INoteService {
                     .searchByCreatedDate(createdDate, UserContext.getInstance().getId(), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | DAOException | SQLException e) {
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | DAOException | SQLException ex) {
+            throw new ServiceException(ex);
         }
 
         return result;
@@ -111,8 +111,8 @@ public class NoteService implements INoteService {
                     .searchByContent(content, UserContext.getInstance().getId(), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | DAOException | SQLException e) {
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | DAOException | SQLException ex) {
+            throw new ServiceException(ex);
         }
 
         return result;

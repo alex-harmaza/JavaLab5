@@ -39,8 +39,8 @@ public class UserDAO implements IUserDAO{
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
             }
-        } catch (SQLException e) {
-            throw new DAOException(e.getMessage(), e);
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
         }
 
         return user;
@@ -66,7 +66,7 @@ public class UserDAO implements IUserDAO{
             s.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DAOException(ex.getMessage(), ex);
+            throw new DAOException(ex);
         }
     }
 
@@ -105,8 +105,8 @@ public class UserDAO implements IUserDAO{
             }
             s.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new DAOException(e.getMessage(), e);
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
         }
     }
 }

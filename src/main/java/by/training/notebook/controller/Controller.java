@@ -1,6 +1,6 @@
 package by.training.notebook.controller;
 
-import by.training.notebook.bean.MessageResponse;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
 import by.training.notebook.command.ICommand;
@@ -20,10 +20,10 @@ public class Controller {
             response = command.execute(request);
         }
         catch (NullPointerException ex){
-            response = new MessageResponse(false, "Incorrect command");
+            response = new ResponseWithMessage(false, "Incorrect command");
         }
         catch (CommandException ex){
-            response = new MessageResponse(false, ex.getMessage());
+            response = new ResponseWithMessage(false, ex.getMessage());
         }
 
         return response;

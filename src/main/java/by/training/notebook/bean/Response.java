@@ -8,10 +8,6 @@ public class Response {
     private boolean status;
 
 
-    public Response(){
-        setStatus(true);
-    }
-
     public Response(boolean status){
         setStatus(status);
     }

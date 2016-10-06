@@ -5,22 +5,22 @@ import by.training.notebook.CommandEnum;
 /**
  * Created by alexh on 05.10.2016.
  */
-public class IDRequest extends Request {
+public class RequestWithID extends Request {
 
-    private long id;
+    private Long id;
 
 
-    public IDRequest(CommandEnum command, long id){
+    public RequestWithID(CommandEnum command, Long id){
         super(command);
         setId(id);
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

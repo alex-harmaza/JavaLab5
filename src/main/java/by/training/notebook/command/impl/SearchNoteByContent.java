@@ -1,11 +1,11 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.ContentRequest;
+import by.training.notebook.bean.RequestWithContent;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
 import by.training.notebook.bean.entity.Note;
-import by.training.notebook.bean.NoteListResponse;
+import by.training.notebook.bean.ResponseWithNoteList;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -19,11 +19,11 @@ public class SearchNoteByContent implements ICommand {
     @Override
     public Response execute(Request request) throws CommandException {
         if (request == null || request.getCommand() != CommandEnum.SEARCH_NOTES_BY_CONTENT
-                || request.getClass() != ContentRequest.class){
+                || request.getClass() != RequestWithContent.class){
             throw new CommandException("Incorrect request type");
         }
 
-        ContentRequest temp = (ContentRequest) request;
+        RequestWithContent temp = (RequestWithContent) request;
         Note[] result;
 
         try {
@@ -31,10 +31,10 @@ public class SearchNoteByContent implements ICommand {
                     .searchByContent(temp.getContent());
         }
         catch (ServiceException ex){
-            throw new CommandException(ex.getMessage(), ex);
+            throw new CommandException(ex);
         }
 
-        return new NoteListResponse(result);
+        return new ResponseWithNoteList(result);
     }
 
 }

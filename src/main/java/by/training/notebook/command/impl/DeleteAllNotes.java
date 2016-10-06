@@ -1,7 +1,7 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.MessageResponse;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
 import by.training.notebook.command.ICommand;
@@ -25,10 +25,10 @@ public class DeleteAllNotes implements ICommand {
             ServiceFactory.getInstance().getNoteService().deleteAllNotes();
         }
         catch (ServiceException ex){
-            throw new CommandException(ex.getMessage(), ex);
+            throw new CommandException(ex);
         }
 
-        return new MessageResponse("Notes deleted");
+        return new ResponseWithMessage("Notes deleted");
     }
 
 }

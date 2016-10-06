@@ -21,12 +21,6 @@ public class User {
         setPassword(password);
     }
 
-    public User(Long id, String login, String password){
-        setId(id);
-        setLogin(login);
-        setPassword(password);
-    }
-
 
     public Long getId() {
         return id;

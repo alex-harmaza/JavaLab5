@@ -30,7 +30,7 @@ public class NoteDAO implements INoteDAO {
         try (PreparedStatement s = connection
                 .prepareStatement((note.getId() == null) ? ADD_NOTE_QUERY : UPDATE_NOTE_QUERY)) {
             s.setLong(1, note.getCreationDate().getTime());
-            s.setString(2, note.getMessage());
+            s.setString(2, note.getContent());
             s.setLong(3, note.getUserID());
 
             if (note.getId() != null){
@@ -38,8 +38,8 @@ public class NoteDAO implements INoteDAO {
             }
             s.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new DAOException(e.getMessage(), e);
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
         }
     }
 
@@ -89,13 +89,13 @@ public class NoteDAO implements INoteDAO {
                 Note note = new Note();
                 note.setId(resultSet.getLong("id"));
                 note.setCreationDate(new Date(resultSet.getLong("createdDate")));
-                note.setMessage(resultSet.getString("message"));
+                note.setContent(resultSet.getString("message"));
                 note.setUserID(resultSet.getLong("userID"));
                 result.add(note);
             }
 
-        } catch (SQLException e) {
-            throw new DAOException(e.getMessage(), e);
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
         }
 
         return result.toArray(new Note[result.size()]);
@@ -120,13 +120,13 @@ public class NoteDAO implements INoteDAO {
                 Note note = new Note();
                 note.setId(resultSet.getLong("id"));
                 note.setCreationDate(new Date(resultSet.getLong("createdDate")));
-                note.setMessage(resultSet.getString("message"));
+                note.setContent(resultSet.getString("message"));
                 note.setUserID(resultSet.getLong("userID"));
                 result.add(note);
             }
 
-        } catch (SQLException e) {
-            throw new DAOException(e.getMessage(), e);
+        } catch (SQLException ex) {
+            throw new DAOException(ex);
         }
 
         return result.toArray(new Note[result.size()]);

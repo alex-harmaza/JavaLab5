@@ -6,13 +6,13 @@ import by.training.notebook.bean.Request;
 /**
  * Created by Aliaksandr_Harmaza on 10/6/2016.
  */
-public class TokenRequest extends Request {
+public class RequestWithToken extends Request {
 
     private String login;
     private String password;
 
 
-    public TokenRequest(CommandEnum command, String login, String password){
+    public RequestWithToken(CommandEnum command, String login, String password){
         super(command);
         setLogin(login);
         setPassword(password);

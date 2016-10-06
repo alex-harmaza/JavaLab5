@@ -3,7 +3,7 @@ package by.training.notebook.command.impl;
 import by.training.notebook.CommandEnum;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
-import by.training.notebook.bean.MessageResponse;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -25,10 +25,10 @@ public class DeleteCurrentUser implements ICommand {
             ServiceFactory.getInstance().getUserService().deleteCurrentUser();
         }
         catch (ServiceException ex){
-            throw new CommandException(ex.getMessage(), ex);
+            throw new CommandException(ex);
         }
 
-        return new MessageResponse("You removed");
+        return new ResponseWithMessage("You removed");
     }
 
 }

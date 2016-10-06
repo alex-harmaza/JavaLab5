@@ -9,7 +9,7 @@ public class DAOException extends Exception {
         super(message);
     }
 
-    public DAOException(String message, Throwable throwable){
-        super(message, throwable);
+    public DAOException(Throwable cause) {
+        super(cause);
     }
 }

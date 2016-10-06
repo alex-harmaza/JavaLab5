@@ -3,8 +3,8 @@ package by.training.notebook.command.impl;
 import by.training.notebook.CommandEnum;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
-import by.training.notebook.bean.MessageResponse;
-import by.training.notebook.bean.TokenRequest;
+import by.training.notebook.bean.ResponseWithMessage;
+import by.training.notebook.bean.RequestWithToken;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -18,20 +18,20 @@ public class LoginUser implements ICommand {
     @Override
     public Response execute(Request request) throws CommandException {
         if (request == null || request.getCommand() != CommandEnum.LOGIN_USER
-                || request.getClass() != TokenRequest.class){
+                || request.getClass() != RequestWithToken.class){
             throw new CommandException("Incorrect request");
         }
 
-        TokenRequest temp = (TokenRequest) request;
+        RequestWithToken temp = (RequestWithToken) request;
 
         try {
             ServiceFactory.getInstance().getUserService()
                     .login(temp.getLogin(), temp.getPassword());
-        } catch (ServiceException e) {
-            throw new CommandException(e.getMessage(), e);
+        } catch (ServiceException ex) {
+            throw new CommandException(ex);
         }
 
-        return new MessageResponse("You are logged");
+        return new ResponseWithMessage("You are logged");
     }
 
 }

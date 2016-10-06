@@ -1,8 +1,8 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.IDRequest;
-import by.training.notebook.bean.MessageResponse;
+import by.training.notebook.bean.RequestWithID;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
 import by.training.notebook.command.ICommand;
@@ -18,19 +18,19 @@ public class DeleteNote implements ICommand {
     @Override
     public Response execute(Request request) throws CommandException {
         if (request == null || request.getCommand() != CommandEnum.DELETE_NOTE
-                || request.getClass() != IDRequest.class){
+                || request.getClass() != RequestWithID.class){
             throw new CommandException("Incorrect request type");
         }
 
-        IDRequest temp = (IDRequest) request;
+        RequestWithID temp = (RequestWithID) request;
         try {
             ServiceFactory.getInstance().getNoteService().deleteNoteByID(temp.getId());
         }
         catch (ServiceException ex){
-            throw new CommandException(ex.getMessage(), ex);
+            throw new CommandException(ex);
         }
 
-        return new MessageResponse("Note is deleted");
+        return new ResponseWithMessage("Note is deleted");
     }
 
 

@@ -9,22 +9,15 @@ public class Note {
 
     private Long id;
     private Date creationDate;
-    private String message;
+    private String content;
     private Long userID;
 
 
     public Note(){}
 
-    public Note(Date createdDate, String message, Long userID){
+    public Note(Date createdDate, String content, Long userID){
         setCreationDate(createdDate);
-        setMessage(message);
-        setUserID(userID);
-    }
-
-    public Note(Long id, Date creationDate, String message, Long userID){
-        setId(id);
-        setCreationDate(creationDate);
-        setMessage(message);
+        setContent(content);
         setUserID(userID);
     }
 
@@ -45,12 +38,12 @@ public class Note {
         this.creationDate = creationDate;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message.trim();
+    public void setContent(String content) {
+        this.content = content.trim();
     }
 
     public Long getUserID() {

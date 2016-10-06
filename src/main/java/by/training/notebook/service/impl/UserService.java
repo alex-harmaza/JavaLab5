@@ -31,8 +31,8 @@ public class UserService implements IUserService {
             ConnectionPool.Connection connection = ConnectionPool.getInstance().takeConnection();
             user = DAOFactory.getInstance().getUserDAO().getUser(login, connection);
             ConnectionPool.getInstance().returnConnection(connection);
-        } catch (InterruptedException | SQLException | DAOException e) {
-            throw new ServiceException(e.getMessage(), e);
+        } catch (InterruptedException | SQLException | DAOException ex) {
+            throw new ServiceException(ex);
         }
 
         boolean result = false;
@@ -64,8 +64,8 @@ public class UserService implements IUserService {
             DAOFactory.getInstance().getUserDAO().addUser(new User(login, password), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | SQLException | DAOException e){
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | SQLException | DAOException ex){
+            throw new ServiceException(ex);
         }
     }
 
@@ -81,8 +81,8 @@ public class UserService implements IUserService {
                     .deleteUser(new User(UserContext.getInstance().getId()), connection);
             ConnectionPool.getInstance().returnConnection(connection);
         }
-        catch (InterruptedException | SQLException | DAOException e){
-            throw new ServiceException(e.getMessage(), e);
+        catch (InterruptedException | SQLException | DAOException ex){
+            throw new ServiceException(ex);
         }
 
         UserContext.getInstance().invalidate();

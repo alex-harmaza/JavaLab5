@@ -5,12 +5,12 @@ import by.training.notebook.CommandEnum;
 /**
  * Created by Aliaksandr_Harmaza on 10/5/2016.
  */
-public class ContentRequest extends Request {
+public class RequestWithContent extends Request {
 
     private String content;
 
 
-    public ContentRequest(CommandEnum command, String content){
+    public RequestWithContent(CommandEnum command, String content){
         super(command);
         setContent(content);
     }
