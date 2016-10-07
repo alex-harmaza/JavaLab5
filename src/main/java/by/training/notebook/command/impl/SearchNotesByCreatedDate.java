@@ -6,6 +6,7 @@ import by.training.notebook.bean.Response;
 import by.training.notebook.bean.RequestWithDate;
 import by.training.notebook.bean.entity.Note;
 import by.training.notebook.bean.ResponseWithNoteList;
+import by.training.notebook.bean.entity.ShortNote;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -23,7 +24,7 @@ public class SearchNotesByCreatedDate implements ICommand {
             throw new CommandException("Incorrect request type");
         }
 
-        Note[] result;
+        ShortNote[] result;
         RequestWithDate temp = (RequestWithDate) request;
 
         try {

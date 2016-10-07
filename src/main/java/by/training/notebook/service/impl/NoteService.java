@@ -1,5 +1,6 @@
 package by.training.notebook.service.impl;
 
+import by.training.notebook.bean.entity.ShortNote;
 import by.training.notebook.service.impl.context.UserTypeEnum;
 import by.training.notebook.bean.entity.Note;
 import by.training.notebook.dao.exception.DAOException;
@@ -71,7 +72,7 @@ public class NoteService implements INoteService {
     }
 
     @Override
-    public Note[] searchByCreatedDate(Date createdDate) throws ServiceException {
+    public ShortNote[] searchByCreatedDate(Date createdDate) throws ServiceException {
         if (createdDate == null){
             throw new ServiceException("Incorrect created date");
         }
@@ -79,7 +80,7 @@ public class NoteService implements INoteService {
             throw new ServiceException("Unauthorized user");
         }
 
-        Note[] result;
+        ShortNote[] result;
 
         try {
             ConnectionPool.Connection connection = ConnectionPool.getInstance().takeConnection();
@@ -95,7 +96,7 @@ public class NoteService implements INoteService {
     }
 
     @Override
-    public Note[] searchByContent(String content) throws ServiceException {
+    public ShortNote[] searchByContent(String content) throws ServiceException {
         if (content == null || content.trim().isEmpty()){
             throw new ServiceException("Incorrect content");
         }
@@ -103,7 +104,7 @@ public class NoteService implements INoteService {
             throw new ServiceException("Unauthorized user");
         }
 
-        Note[] result;
+        ShortNote[] result;
 
         try {
             ConnectionPool.Connection connection = ConnectionPool.getInstance().takeConnection();

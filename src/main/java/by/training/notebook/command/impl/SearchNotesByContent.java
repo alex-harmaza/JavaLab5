@@ -6,6 +6,7 @@ import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
 import by.training.notebook.bean.entity.Note;
 import by.training.notebook.bean.ResponseWithNoteList;
+import by.training.notebook.bean.entity.ShortNote;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -24,7 +25,7 @@ public class SearchNotesByContent implements ICommand {
         }
 
         RequestWithContent temp = (RequestWithContent) request;
-        Note[] result;
+        ShortNote[] result;
 
         try {
             result = ServiceFactory.getInstance().getNoteService()

@@ -1,6 +1,7 @@
 package by.training.notebook.dao.impl;
 
 import by.training.notebook.bean.entity.Note;
+import by.training.notebook.bean.entity.ShortNote;
 import by.training.notebook.dao.INoteDAO;
 import by.training.notebook.dao.exception.DAOException;
 import by.training.notebook.dao.pool.ConnectionPool;
@@ -8,6 +9,7 @@ import by.training.notebook.dao.pool.ConnectionPool;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,19 +19,20 @@ import java.util.List;
  */
 public class NoteDAO implements INoteDAO {
 
-    private final static String ADD_NOTE_QUERY = "INSERT INTO Note (createdDate, message, userID) VALUES (?, ?, ?)";
-    private final static String UPDATE_NOTE_QUERY = "UPDATE INTO Note SET createdDate = ? message = ? userID = ? WHERE id = ?";
-    private final static String SEARCH_BY_CONTENT_QUERY = "SELECT * FROM Note WHERE message = ? and userID = ?";
-    private final static String SEARCH_BY_CREATED_DATE_QUERY = "SELECT * FROM Note WHERE createdDate = ? and userID = ?";
-    private final static String DELETE_BY_ID_AND_USER_ID_QUERY = "DELETE_USER FROM Note where id = ? AND userID = ?";
-    private final static String DELETE_BY_USER_ID_QUERY = "DELETE FROM Note where userID = ?";
+    private final static String ADD_NOTE_QUERY = "INSERT INTO Note (createdDate, content, userID) VALUES (?, ?, ?)";
+    private final static String UPDATE_NOTE_QUERY = "UPDATE INTO Note SET createdDate = ?, content = ?, userID = ? WHERE id = ?";
+    private final static String SEARCH_BY_CONTENT_QUERY = "SELECT * FROM Note WHERE content = ? AND userID = ?";
+    private final static String SEARCH_BY_CREATED_DATE_QUERY = "SELECT * FROM Note WHERE " +
+            "YEAR(createdDate) = YEAR(?) AND DAYOFYEAR(createdDate) = DAYOFYEAR(?) AND userID = ?";
+    private final static String DELETE_BY_ID_AND_USER_ID_QUERY = "DELETE FROM Note where id = ? AND userID = ?";
+    private final static String DELETE_BY_USER_ID_QUERY = "DELETE FROM Note WHERE userID = ?";
 
 
     @Override
     public void saveNote(Note note, ConnectionPool.Connection connection) throws DAOException {
         try (PreparedStatement s = connection
                 .prepareStatement((note.getId() == null) ? ADD_NOTE_QUERY : UPDATE_NOTE_QUERY)) {
-            s.setLong(1, note.getCreationDate().getTime());
+            s.setTimestamp(1, new Timestamp(note.getCreationDate().getTime()));
             s.setString(2, note.getContent());
             s.setLong(3, note.getUserID());
 
@@ -71,7 +74,7 @@ public class NoteDAO implements INoteDAO {
     }
 
     @Override
-    public Note[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection connection) throws DAOException {
+    public ShortNote[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection connection) throws DAOException {
         if (createdDate == null){
             throw new DAOException("Content is null");
         }
@@ -79,18 +82,18 @@ public class NoteDAO implements INoteDAO {
             throw new DAOException("Connection is null");
         }
 
-        List<Note> result = new ArrayList<>();
+        List<ShortNote> result = new ArrayList<>();
         try (PreparedStatement s = connection.prepareStatement(SEARCH_BY_CREATED_DATE_QUERY)) {
-            s.setLong(1, createdDate.getTime());
-            s.setLong(2, userID);
+            s.setTimestamp(1, new Timestamp(createdDate.getTime()));
+            s.setTimestamp(2, new Timestamp(createdDate.getTime()));
+            s.setLong(3, userID);
             ResultSet resultSet = s.executeQuery();
 
             while (resultSet.next()){
-                Note note = new Note();
+                ShortNote note = new ShortNote();
                 note.setId(resultSet.getLong("id"));
-                note.setCreationDate(new Date(resultSet.getLong("createdDate")));
-                note.setContent(resultSet.getString("message"));
-                note.setUserID(resultSet.getLong("userID"));
+                note.setCreationDate(new Date(resultSet.getTimestamp("createdDate").getTime()));
+                note.setContent(resultSet.getString("content"));
                 result.add(note);
             }
 
@@ -98,11 +101,11 @@ public class NoteDAO implements INoteDAO {
             throw new DAOException(ex);
         }
 
-        return result.toArray(new Note[result.size()]);
+        return result.toArray(new ShortNote[result.size()]);
     }
 
     @Override
-    public Note[] searchByContent(String content, long userID, ConnectionPool.Connection connection) throws DAOException {
+    public ShortNote[] searchByContent(String content, long userID, ConnectionPool.Connection connection) throws DAOException {
         if (content == null){
             throw new DAOException("Content is null");
         }
@@ -110,18 +113,17 @@ public class NoteDAO implements INoteDAO {
             throw new DAOException("Connection is null");
         }
 
-        List<Note> result = new ArrayList<>();
+        List<ShortNote> result = new ArrayList<>();
         try (PreparedStatement s = connection.prepareStatement(SEARCH_BY_CONTENT_QUERY)) {
             s.setString(1, content);
             s.setLong(2, userID);
             ResultSet resultSet = s.executeQuery();
 
             while (resultSet.next()){
-                Note note = new Note();
+                ShortNote note = new ShortNote();
                 note.setId(resultSet.getLong("id"));
                 note.setCreationDate(new Date(resultSet.getLong("createdDate")));
                 note.setContent(resultSet.getString("message"));
-                note.setUserID(resultSet.getLong("userID"));
                 result.add(note);
             }
 
@@ -129,7 +131,7 @@ public class NoteDAO implements INoteDAO {
             throw new DAOException(ex);
         }
 
-        return result.toArray(new Note[result.size()]);
+        return result.toArray(new ShortNote[result.size()]);
     }
 
 

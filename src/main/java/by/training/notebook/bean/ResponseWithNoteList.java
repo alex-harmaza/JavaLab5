@@ -1,26 +1,27 @@
 package by.training.notebook.bean;
 
 import by.training.notebook.bean.entity.Note;
+import by.training.notebook.bean.entity.ShortNote;
 
 /**
  * Created by Aliaksandr_Harmaza on 10/6/2016.
  */
 public class ResponseWithNoteList extends Response {
 
-    private Note[] noteList;
+    private ShortNote[] noteList;
 
 
-    public ResponseWithNoteList(Note[] noteList){
+    public ResponseWithNoteList(ShortNote[] noteList){
         super(true);
         setNoteList(noteList);
     }
 
 
-    public Note[] getNoteList() {
+    public ShortNote[] getNoteList() {
         return noteList;
     }
 
-    public void setNoteList(Note[] noteList) {
+    public void setNoteList(ShortNote[] noteList) {
         this.noteList = noteList;
     }
 }
