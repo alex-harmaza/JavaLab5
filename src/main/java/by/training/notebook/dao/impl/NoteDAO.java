@@ -22,8 +22,8 @@ public class NoteDAO implements INoteDAO {
 
     private final static String ADD_NOTE_QUERY = "INSERT INTO Note (createdDate, content, userID) VALUES (?, ?, ?)";
     private final static String UPDATE_NOTE_QUERY = "UPDATE INTO Note SET createdDate = ?, content = ?, userID = ? WHERE id = ?";
-    private final static String SEARCH_BY_CONTENT_QUERY = "SELECT * FROM Note WHERE content = ? AND userID = ?";
-    private final static String SEARCH_BY_CREATED_DATE_QUERY = "SELECT * FROM Note WHERE " +
+    private final static String SEARCH_BY_CONTENT_QUERY = "SELECT id, createdDate, content FROM Note WHERE content = ? AND userID = ?";
+    private final static String SEARCH_BY_CREATED_DATE_QUERY = "SELECT id, createdDate, content FROM Note WHERE " +
             "YEAR(createdDate) = YEAR(?) AND DAYOFYEAR(createdDate) = DAYOFYEAR(?) AND userID = ?";
     private final static String DELETE_BY_ID_AND_USER_ID_QUERY = "DELETE FROM Note where id = ? AND userID = ?";
     private final static String DELETE_BY_USER_ID_QUERY = "DELETE FROM Note WHERE userID = ?";
