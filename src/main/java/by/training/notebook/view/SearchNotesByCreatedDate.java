@@ -21,7 +21,7 @@ public class SearchNotesByCreatedDate extends View {
         try {
             DateFormat format = new SimpleDateFormat("d.M.y");
             System.out.print("\tEnter the date [day.month.year]: ");
-            request = new RequestWithDate(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE,
+            request = new RequestWithDate(CommandEnum.SEARCH_BY_CREATED_DATE,
                     format.parse(scanner.nextLine()));
         }
         catch (ParseException ex){

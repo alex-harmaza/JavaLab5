@@ -25,8 +25,8 @@ public class ViewFactory {
         viewMap.put(CommandEnum.ADD_NOTE, new AddNote());
         viewMap.put(CommandEnum.DELETE_NOTE, new DeleteNote());
         viewMap.put(CommandEnum.DELETE_ALL_NOTES, new DeleteAllNotes());
-        viewMap.put(CommandEnum.SEARCH_NOTES_BY_CONTENT, new SearchNotesByContent());
-        viewMap.put(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE, new SearchNotesByCreatedDate());
+        viewMap.put(CommandEnum.SEARCH_BY_CONTENT, new SearchNotesByContent());
+        viewMap.put(CommandEnum.SEARCH_BY_CREATED_DATE, new SearchNotesByCreatedDate());
 
         viewMap.put(CommandEnum.HELP, new ShowHelp());
         viewMap.put(CommandEnum.EXIT, new CloseProgram());

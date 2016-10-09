@@ -17,7 +17,7 @@ public class SearchNotesByContent extends View {
         Request request;
         try {
             System.out.print("\tEnter the content: ");
-            request = new RequestWithContent(CommandEnum.SEARCH_NOTES_BY_CONTENT,
+            request = new RequestWithContent(CommandEnum.SEARCH_BY_CONTENT,
                     scanner.nextLine());
         }
         catch (IllegalArgumentException ex){

@@ -18,7 +18,7 @@ public class SearchNotesByContent implements ICommand {
 
     @Override
     public Response execute(Request request) throws CommandException {
-        if (request == null || request.getCommand() != CommandEnum.SEARCH_NOTES_BY_CONTENT
+        if (request == null || request.getCommand() != CommandEnum.SEARCH_BY_CONTENT
                 || request.getClass() != RequestWithContent.class){
             throw new CommandException("Incorrect request type");
         }

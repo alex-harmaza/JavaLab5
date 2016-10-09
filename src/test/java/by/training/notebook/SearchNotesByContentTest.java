@@ -23,7 +23,7 @@ public class SearchNotesByContentTest extends ControllerTest {
     @Override @Test
     public void checkResponseWithInvalidRequest() {
         Response response = getController()
-                .doRequest(new Request(CommandEnum.SEARCH_NOTES_BY_CONTENT));
+                .doRequest(new Request(CommandEnum.SEARCH_BY_CONTENT));
         assertNotNull(response, "Response is null");
         assertFalse(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithMessage.class, "Incorrect response type");
@@ -33,7 +33,7 @@ public class SearchNotesByContentTest extends ControllerTest {
     @Test(priority = 0)
     public void checkResponseIfNotAuthorizedUser(){
         Response response = getController()
-                .doRequest(new RequestWithContent(CommandEnum.SEARCH_NOTES_BY_CONTENT, USER_LOGIN));
+                .doRequest(new RequestWithContent(CommandEnum.SEARCH_BY_CONTENT, USER_LOGIN));
         assertNotNull(response, "Response is null");
         assertFalse(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithMessage.class, "Incorrect response type");
@@ -49,7 +49,7 @@ public class SearchNotesByContentTest extends ControllerTest {
         MySQLQuery.addNote(new Date(), NOTE_CONTENT, userContext.getId(), getConnection());
 
         Response response = getController()
-                .doRequest(new RequestWithContent(CommandEnum.SEARCH_NOTES_BY_CONTENT, NOTE_CONTENT));
+                .doRequest(new RequestWithContent(CommandEnum.SEARCH_BY_CONTENT, NOTE_CONTENT));
         assertNotNull(response, "Response is null");
         assertTrue(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithNoteList.class, "Incorrect response type");

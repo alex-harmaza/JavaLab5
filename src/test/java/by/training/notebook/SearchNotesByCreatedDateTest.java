@@ -22,7 +22,7 @@ public class SearchNotesByCreatedDateTest extends ControllerTest {
     @Override @Test
     public void checkResponseWithInvalidRequest() {
         Response response = getController()
-                .doRequest(new Request(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE));
+                .doRequest(new Request(CommandEnum.SEARCH_BY_CREATED_DATE));
         assertNotNull(response, "Response is null");
         assertFalse(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithMessage.class, "Incorrect response type");
@@ -31,7 +31,7 @@ public class SearchNotesByCreatedDateTest extends ControllerTest {
     @Test(priority = 0)
     public void checkResponseIfNotAuthorizedUser(){
         Response response = getController()
-                .doRequest(new RequestWithDate(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE, new Date()));
+                .doRequest(new RequestWithDate(CommandEnum.SEARCH_BY_CREATED_DATE, new Date()));
         assertNotNull(response, "Response is null");
         assertFalse(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithMessage.class, "Incorrect response type");
@@ -47,7 +47,7 @@ public class SearchNotesByCreatedDateTest extends ControllerTest {
         MySQLQuery.addNote(new Date(), NOTE_CONTENT, userContext.getId(), getConnection());
 
         Response response = getController()
-                .doRequest(new RequestWithDate(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE, new Date()));
+                .doRequest(new RequestWithDate(CommandEnum.SEARCH_BY_CREATED_DATE, new Date()));
         assertNotNull(response, "Response is null");
         assertTrue(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithNoteList.class, "Incorrect response type");

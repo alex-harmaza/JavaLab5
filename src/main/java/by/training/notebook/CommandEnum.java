@@ -8,9 +8,9 @@ public enum CommandEnum {
     SHOW_NOTES("SN", "SHOW_NOTES (SN) - show records of the current user"),
     ADD_NOTE("AN", "ADD_NOTE (AN) - add note to the current user"),
     DELETE_NOTE("DN", "DELETE_NOTE (DN) - delete note by id"),
-    DELETE_ALL_NOTES("DAL", "DELETE_ALL_NOTES (DAL) - delete all the notes of the current user"),
-    SEARCH_NOTES_BY_CREATED_DATE("SBCD", "SEARCH_BY_CREATED_DATE (SBCD) - search notes by content"),
-    SEARCH_NOTES_BY_CONTENT("SBC", "SEARCH_BY_CONTENT (SBC) - search notes by created date"),
+    DELETE_ALL_NOTES("DAN", "DELETE_ALL_NOTES (DAL) - delete all the notes of the current user"),
+    SEARCH_BY_CREATED_DATE("SBCD", "SEARCH_BY_CREATED_DATE (SBCD) - search notes by content"),
+    SEARCH_BY_CONTENT("SBC", "SEARCH_BY_CONTENT (SBC) - search notes by created date"),
 
     LOGIN_USER("LGN" , "LOGIN (LGN)"),
     REGISTER_USER("RGSTR", "REGISTER_USER (RGSTR)"),

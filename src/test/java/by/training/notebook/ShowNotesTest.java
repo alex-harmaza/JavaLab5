@@ -36,7 +36,7 @@ public class ShowNotesTest extends ControllerTest {
     @Test(priority = 0)
     public void checkResponseIfNotAuthorizedUser(){
         Response response = getController()
-                .doRequest(new RequestWithDate(CommandEnum.SEARCH_NOTES_BY_CREATED_DATE, new Date()));
+                .doRequest(new RequestWithDate(CommandEnum.SEARCH_BY_CREATED_DATE, new Date()));
         assertNotNull(response, "Response is null");
         assertFalse(response.isStatus(), "Incorrect response status");
         assertEquals(response.getClass(), ResponseWithMessage.class, "Incorrect response type");
