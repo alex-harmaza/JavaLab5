@@ -12,6 +12,7 @@ public class CloseProgram extends View {
 
     @Override
     public Request createRequest(Scanner scanner) throws ViewException {
+        System.out.print("Goodbye user");
         System.exit(0);
         return null;
     }
