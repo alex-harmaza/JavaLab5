@@ -1,10 +1,9 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.RequestWithContent;
 import by.training.notebook.bean.Request;
+import by.training.notebook.bean.RequestWithContent;
 import by.training.notebook.bean.Response;
-import by.training.notebook.bean.entity.Note;
 import by.training.notebook.bean.ResponseWithNoteList;
 import by.training.notebook.bean.entity.ShortNote;
 import by.training.notebook.command.ICommand;
@@ -32,7 +31,7 @@ public class SearchNotesByContent implements ICommand {
                     .searchByContent(temp.getContent());
         }
         catch (ServiceException ex){
-            throw new CommandException(ex);
+            throw new CommandException(ex.getMessage(), ex);
         }
 
         return new ResponseWithNoteList(result);

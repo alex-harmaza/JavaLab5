@@ -1,10 +1,10 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.RequestWithID;
-import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.Request;
+import by.training.notebook.bean.RequestWithID;
 import by.training.notebook.bean.Response;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -27,7 +27,7 @@ public class DeleteNote implements ICommand {
             ServiceFactory.getInstance().getNoteService().deleteNoteByID(temp.getId());
         }
         catch (ServiceException ex){
-            throw new CommandException(ex);
+            throw new CommandException(ex.getMessage(), ex);
         }
 
         return new ResponseWithMessage("Note is deleted");

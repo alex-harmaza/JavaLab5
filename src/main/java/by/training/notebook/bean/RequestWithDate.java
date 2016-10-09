@@ -23,6 +23,9 @@ public class RequestWithDate extends Request {
     }
 
     public void setDate(Date date) {
+        if (date == null){
+            throw new NullPointerException("Incorrect date");
+        }
         this.date = date;
     }
 }

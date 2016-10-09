@@ -25,7 +25,7 @@ public class DeleteCurrentUser implements ICommand {
             ServiceFactory.getInstance().getUserService().deleteCurrentUser();
         }
         catch (ServiceException ex){
-            throw new CommandException(ex);
+            throw new CommandException(ex.getMessage(), ex);
         }
 
         return new ResponseWithMessage("You removed");

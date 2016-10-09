@@ -21,6 +21,9 @@ public class RequestWithContent extends Request {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        if (content == null || content.trim().isEmpty()){
+            throw new IllegalArgumentException("Incorrect content");
+        }
+        this.content = content.trim();
     }
 }

@@ -24,6 +24,9 @@ public class ResponseWithMessage extends Response {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        if (message == null || message.trim().isEmpty()){
+            throw new IllegalArgumentException("Incorrect message");
+        }
+        this.message = message.trim();
     }
 }

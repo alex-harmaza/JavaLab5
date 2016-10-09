@@ -1,10 +1,10 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.RequestWithContent;
-import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.Request;
+import by.training.notebook.bean.RequestWithContent;
 import by.training.notebook.bean.Response;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -27,7 +27,7 @@ public class AddNote implements ICommand {
             ServiceFactory.getInstance().getNoteService().addNote(temp.getContent());
         }
         catch (ServiceException ex){
-            throw new CommandException(ex);
+            throw new CommandException(ex.getMessage(), ex);
         }
 
         return new ResponseWithMessage("Note added");

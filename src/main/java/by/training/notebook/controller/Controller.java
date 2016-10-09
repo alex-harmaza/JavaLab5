@@ -1,8 +1,8 @@
 package by.training.notebook.controller;
 
-import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.Request;
 import by.training.notebook.bean.Response;
+import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.command.factory.CommandFactory;

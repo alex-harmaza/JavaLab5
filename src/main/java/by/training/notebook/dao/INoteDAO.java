@@ -12,9 +12,11 @@ import java.util.Date;
  */
 public interface INoteDAO {
 
-    void saveNote(Note note, ConnectionPool.Connection connection) throws DAOException;
-    void deleteNoteByIDAndUserID(long noteID, long userID, ConnectionPool.Connection connection) throws DAOException;
-    void deleteAllNotes(long userID, ConnectionPool.Connection connection) throws DAOException;
-    ShortNote[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection connection) throws DAOException;
-    ShortNote[] searchByContent(String content, long userID, ConnectionPool.Connection connection) throws DAOException;
+    ShortNote[] getNoteList(long userID, ConnectionPool.Connection c) throws DAOException;
+    void saveNote(Note note, ConnectionPool.Connection c) throws DAOException;
+    void deleteNote(long noteID, long userID, ConnectionPool.Connection c) throws DAOException;
+    void deleteNote(long userID, ConnectionPool.Connection c) throws DAOException;
+    ShortNote[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection c) throws DAOException;
+    ShortNote[] searchByContent(String content, long userID, ConnectionPool.Connection c) throws DAOException;
+
 }

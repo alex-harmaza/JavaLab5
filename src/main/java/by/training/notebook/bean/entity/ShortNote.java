@@ -1,5 +1,6 @@
 package by.training.notebook.bean.entity;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -8,14 +9,14 @@ import java.util.Date;
 public class ShortNote {
 
     private Long id;
-    private Date creationDate;
+    private Date createdDate;
     private String content;
 
 
     public ShortNote(){}
 
     public ShortNote(Date createdDate, String content){
-        setCreationDate(createdDate);
+        setCreatedDate(createdDate);
         setContent(content);
     }
 
@@ -28,12 +29,12 @@ public class ShortNote {
         this.id = id;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getContent() {
@@ -45,4 +46,20 @@ public class ShortNote {
     }
 
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        if (id != null){
+            builder.append("id: ").append(id).append("\n");
+        }
+        if (createdDate != null){
+            builder.append("createdDate: ").append(DateFormat
+                    .getDateTimeInstance().format(createdDate))
+                    .append("\n");
+        }
+        if (content != null){
+            builder.append("content: ").append(content);
+        }
+        return builder.toString();
+    }
 }

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,13 +27,37 @@ public class NoteDAO implements INoteDAO {
             "YEAR(createdDate) = YEAR(?) AND DAYOFYEAR(createdDate) = DAYOFYEAR(?) AND userID = ?";
     private final static String DELETE_BY_ID_AND_USER_ID_QUERY = "DELETE FROM Note where id = ? AND userID = ?";
     private final static String DELETE_BY_USER_ID_QUERY = "DELETE FROM Note WHERE userID = ?";
+    private final static String GET_ALL_NOTES_BY_USER_QUERY = "SELECT id, createdDate, content FROM Note WHERE userID = ?";
 
 
     @Override
-    public void saveNote(Note note, ConnectionPool.Connection connection) throws DAOException {
-        try (PreparedStatement s = connection
+    public ShortNote[] getNoteList(long userID, ConnectionPool.Connection c) throws DAOException {
+        if (c == null){
+            throw new DAOException("Connection is null");
+        }
+
+        ShortNote[] result;
+        try (PreparedStatement s = c.prepareStatement(GET_ALL_NOTES_BY_USER_QUERY)) {
+            s.setLong(1, userID);
+            result = convertToShortNoteArray(s.executeQuery());
+        } catch (SQLException ex) {
+            throw new DAOException(ex.getMessage(), ex);
+        }
+
+        return result;
+    }
+
+    @Override
+    public void saveNote(Note note, ConnectionPool.Connection c) throws DAOException {
+        if (note == null){
+            throw new DAOException("Note is null");
+        }
+        if (c == null){
+            throw new DAOException("Connection is null");
+        }
+        try (PreparedStatement s = c
                 .prepareStatement((note.getId() == null) ? ADD_NOTE_QUERY : UPDATE_NOTE_QUERY)) {
-            s.setTimestamp(1, new Timestamp(note.getCreationDate().getTime()));
+            s.setTimestamp(1, new Timestamp(note.getCreatedDate().getTime()));
             s.setString(2, note.getContent());
             s.setLong(3, note.getUserID());
 
@@ -42,97 +67,92 @@ public class NoteDAO implements INoteDAO {
             s.executeUpdate();
 
         } catch (SQLException ex) {
-            throw new DAOException(ex);
+            throw new DAOException(ex.getMessage(), ex);
         }
     }
 
     @Override
-    public void deleteNoteByIDAndUserID(long noteID, long userID, ConnectionPool.Connection connection) throws DAOException {
-        if (connection == null){
+    public void deleteNote(long noteID, long userID, ConnectionPool.Connection c) throws DAOException {
+        if (c == null){
             throw new DAOException("Connection is null");
         }
-        try (PreparedStatement s = connection.prepareStatement(DELETE_BY_ID_AND_USER_ID_QUERY)) {
+        try (PreparedStatement s = c.prepareStatement(DELETE_BY_ID_AND_USER_ID_QUERY)) {
             s.setLong(1, noteID);
             s.setLong(2, userID);
-            s.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DAOException(ex.getMessage(), ex);
         }
     }
 
     @Override
-    public void deleteAllNotes(long userID, ConnectionPool.Connection connection) throws DAOException {
-        if (connection == null){
+    public void deleteNote(long userID, ConnectionPool.Connection c) throws DAOException {
+        if (c == null){
             throw new DAOException("Connection is null");
         }
-        try (PreparedStatement s = connection.prepareStatement(DELETE_BY_USER_ID_QUERY)) {
+        try (PreparedStatement s = c.prepareStatement(DELETE_BY_USER_ID_QUERY)) {
             s.setLong(1, userID);
-            s.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DAOException(ex.getMessage(), ex);
         }
     }
 
     @Override
-    public ShortNote[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection connection) throws DAOException {
+    public ShortNote[] searchByCreatedDate(Date createdDate, long userID, ConnectionPool.Connection c) throws DAOException {
         if (createdDate == null){
             throw new DAOException("Content is null");
         }
-        if (connection == null){
+        if (c == null){
             throw new DAOException("Connection is null");
         }
 
-        List<ShortNote> result = new ArrayList<>();
-        try (PreparedStatement s = connection.prepareStatement(SEARCH_BY_CREATED_DATE_QUERY)) {
-            s.setTimestamp(1, new Timestamp(createdDate.getTime()));
-            s.setTimestamp(2, new Timestamp(createdDate.getTime()));
+        ShortNote[] result;
+        int offset = Calendar.getInstance().getTimeZone().getOffset(createdDate.getTime());
+        try (PreparedStatement s = c.prepareStatement(SEARCH_BY_CREATED_DATE_QUERY)) {
+            s.setTimestamp(1, new Timestamp(createdDate.getTime() + offset));
+            s.setTimestamp(2, new Timestamp(createdDate.getTime() + offset));
             s.setLong(3, userID);
-            ResultSet resultSet = s.executeQuery();
-
-            while (resultSet.next()){
-                ShortNote note = new ShortNote();
-                note.setId(resultSet.getLong("id"));
-                note.setCreationDate(new Date(resultSet.getTimestamp("createdDate").getTime()));
-                note.setContent(resultSet.getString("content"));
-                result.add(note);
-            }
-
+            result = convertToShortNoteArray(s.executeQuery());
         } catch (SQLException ex) {
-            throw new DAOException(ex);
+            throw new DAOException(ex.getMessage(), ex);
         }
 
-        return result.toArray(new ShortNote[result.size()]);
+        return result;
     }
 
     @Override
-    public ShortNote[] searchByContent(String content, long userID, ConnectionPool.Connection connection) throws DAOException {
+    public ShortNote[] searchByContent(String content, long userID, ConnectionPool.Connection c) throws DAOException {
         if (content == null){
             throw new DAOException("Content is null");
         }
-        if (connection == null){
+        if (c == null){
             throw new DAOException("Connection is null");
         }
 
-        List<ShortNote> result = new ArrayList<>();
-        try (PreparedStatement s = connection.prepareStatement(SEARCH_BY_CONTENT_QUERY)) {
+        ShortNote[] result;
+        try (PreparedStatement s = c.prepareStatement(SEARCH_BY_CONTENT_QUERY)) {
             s.setString(1, content);
             s.setLong(2, userID);
-            ResultSet resultSet = s.executeQuery();
-
-            while (resultSet.next()){
-                ShortNote note = new ShortNote();
-                note.setId(resultSet.getLong("id"));
-                note.setCreationDate(new Date(resultSet.getLong("createdDate")));
-                note.setContent(resultSet.getString("message"));
-                result.add(note);
-            }
-
+            result = convertToShortNoteArray(s.executeQuery());
         } catch (SQLException ex) {
-            throw new DAOException(ex);
+            throw new DAOException(ex.getMessage(), ex);
         }
 
-        return result.toArray(new ShortNote[result.size()]);
+        return result;
     }
 
+
+    private ShortNote[] convertToShortNoteArray(ResultSet resultSet) throws SQLException {
+        List<ShortNote> result = new ArrayList<>();
+        while (resultSet.next()){
+            ShortNote note = new ShortNote();
+            note.setId(resultSet.getLong("id"));
+            note.setCreatedDate(new Date(resultSet.getTimestamp("createdDate").getTime()));
+            note.setContent(resultSet.getString("content"));
+            result.add(note);
+        }
+        return result.toArray(new ShortNote[result.size()]);
+    }
 
 }

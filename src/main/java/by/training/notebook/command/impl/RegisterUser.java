@@ -1,8 +1,8 @@
 package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.RequestWithToken;
 import by.training.notebook.bean.Request;
+import by.training.notebook.bean.RequestWithToken;
 import by.training.notebook.bean.Response;
 import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.command.ICommand;
@@ -29,7 +29,7 @@ public class RegisterUser implements ICommand {
                     .register(temp.getLogin(), temp.getPassword());
         }
         catch (ServiceException ex){
-            throw new CommandException(ex);
+            throw new CommandException(ex.getMessage(), ex);
         }
 
         return new ResponseWithMessage("You are registered");

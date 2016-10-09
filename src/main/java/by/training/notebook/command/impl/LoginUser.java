@@ -2,9 +2,8 @@ package by.training.notebook.command.impl;
 
 import by.training.notebook.CommandEnum;
 import by.training.notebook.bean.Request;
-import by.training.notebook.bean.Response;
-import by.training.notebook.bean.ResponseWithMessage;
 import by.training.notebook.bean.RequestWithToken;
+import by.training.notebook.bean.Response;
 import by.training.notebook.command.ICommand;
 import by.training.notebook.command.exception.CommandException;
 import by.training.notebook.service.exception.ServiceException;
@@ -23,15 +22,16 @@ public class LoginUser implements ICommand {
         }
 
         RequestWithToken temp = (RequestWithToken) request;
+        boolean result;
 
         try {
-            ServiceFactory.getInstance().getUserService()
+            result = ServiceFactory.getInstance().getUserService()
                     .login(temp.getLogin(), temp.getPassword());
         } catch (ServiceException ex) {
-            throw new CommandException(ex);
+            throw new CommandException(ex.getMessage(), ex);
         }
 
-        return new ResponseWithMessage("You are logged");
+        return new Response(result);
     }
 
 }

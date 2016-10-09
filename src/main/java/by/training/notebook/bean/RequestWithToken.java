@@ -1,7 +1,6 @@
 package by.training.notebook.bean;
 
 import by.training.notebook.CommandEnum;
-import by.training.notebook.bean.Request;
 
 /**
  * Created by Aliaksandr_Harmaza on 10/6/2016.
@@ -24,7 +23,10 @@ public class RequestWithToken extends Request {
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        if (login == null || login.trim().isEmpty()){
+            throw new IllegalArgumentException("Incorrect login");
+        }
+        this.login = login.trim();
     }
 
     public String getPassword() {
@@ -32,6 +34,9 @@ public class RequestWithToken extends Request {
     }
 
     public void setPassword(String password) {
+        if (password == null){
+            throw new IllegalArgumentException("Incorrect password");
+        }
         this.password = password;
     }
 }

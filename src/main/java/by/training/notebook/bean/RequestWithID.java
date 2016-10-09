@@ -21,6 +21,9 @@ public class RequestWithID extends Request {
     }
 
     public void setId(Long id) {
+        if (id == null){
+            throw new NullPointerException("Incorrect id");
+        }
         this.id = id;
     }
 }
