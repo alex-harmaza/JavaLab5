@@ -47,15 +47,9 @@ public class ConnectionPool {
         return connections.take();
     }
 
-    public Connection takeConnection(boolean readOnly) throws InterruptedException, SQLException {
-        Connection connection = connections.take();
-        connection.setReadOnly(readOnly);
-        return connection;
-    }
-
     public void returnConnection(Connection connection) throws SQLException, InterruptedException {
         connection.setAutoCommit(true);
-        connection.setReadOnly(true);
+        connection.setReadOnly(false);
         connections.put(connection);
     }
 

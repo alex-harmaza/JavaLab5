@@ -76,7 +76,7 @@ public class UserService implements IUserService {
 
         try {
             ConnectionPool pool = ConnectionPool.getInstance();
-            ConnectionPool.Connection c = pool.takeConnection(false);
+            ConnectionPool.Connection c = pool.takeConnection();
             try {
                 DAOFactory.getInstance().getUserDAO()
                         .saveUser(new User(login, SHA256.convert(password)), c);
@@ -98,7 +98,7 @@ public class UserService implements IUserService {
         }
         try {
             ConnectionPool pool = ConnectionPool.getInstance();
-            ConnectionPool.Connection c = pool.takeConnection(false);
+            ConnectionPool.Connection c = pool.takeConnection();
             try {
                 DAOFactory.getInstance().getUserDAO()
                         .deleteUser(UserContext.getInstance().getId(), c);

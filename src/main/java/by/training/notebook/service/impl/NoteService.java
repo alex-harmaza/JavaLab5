@@ -56,7 +56,7 @@ public class NoteService implements INoteService {
         }
         try {
             ConnectionPool pool = ConnectionPool.getInstance();
-            ConnectionPool.Connection c = pool.takeConnection(false);
+            ConnectionPool.Connection c = pool.takeConnection();
             try {
                 Note temp = new Note(new Date(), note, userContext.getId());
                 DAOFactory.getInstance().getNoteDAO().saveNote(temp, c);
@@ -77,7 +77,7 @@ public class NoteService implements INoteService {
         }
         try {
             ConnectionPool pool = ConnectionPool.getInstance();
-            ConnectionPool.Connection c = pool.takeConnection(false);
+            ConnectionPool.Connection c = pool.takeConnection();
             try {
                 DAOFactory.getInstance().getNoteDAO()
                         .deleteNote(id, userContext.getId(), c);
@@ -98,7 +98,7 @@ public class NoteService implements INoteService {
         }
         try {
             ConnectionPool pool = ConnectionPool.getInstance();
-            ConnectionPool.Connection c = pool.takeConnection(false);
+            ConnectionPool.Connection c = pool.takeConnection();
             try {
                 DAOFactory.getInstance().getNoteDAO()
                         .deleteNote(UserContext.getInstance().getId(), c);
