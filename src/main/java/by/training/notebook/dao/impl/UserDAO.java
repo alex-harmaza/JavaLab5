@@ -67,13 +67,21 @@ public class UserDAO implements IUserDAO{
             s.executeUpdate();
         }
         catch (SQLException ex){
-            if (ex.getSQLState().equals("23000")){
-                throw new DAOException(String
-                        .format("User with login '%s' already exists", user.getLogin()));
+            String message;
+            switch (ex.getSQLState()){
+                case "22001" : {
+                    message = "Login must be no more than 100 characters";
+                    break;
+                }
+                case "23000" : {
+                    message = String.format("User with login '%s' already exists", user.getLogin());
+                    break;
+                }
+                default: {
+                    message = ex.getMessage();
+                }
             }
-            else {
-                throw new DAOException(ex.getMessage(), ex);
-            }
+            throw new DAOException(message, ex);
         }
     }
 
